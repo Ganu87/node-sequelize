@@ -1,12 +1,13 @@
 const { Customer } = require('../models');
-console.log('custsomer controller start');
+const logger = require('../logger');
 async function createCustomer(req, res) {
     try {
-        console.log('inside createCustomer method ', req.body);
+        logger.info('Creating new customer...');
         const customer = await Customer.create(req.body);
         res.status(201).json(customer);
     } catch (error) {
         console.log('Error : creating customer ' + error);
+        logger.error('Error : creating customer ' + error);
         res.status(500).json({ message: 'Error occured while creating customer' + error })
     }
 
@@ -15,6 +16,7 @@ async function createCustomer(req, res) {
 async function getCustomerById(req, res) {
     try {
         const id = req.params.id;
+        logger.info(`get customer by id ${id}`);
         const customer = await Customer.findByPk(id);
         if (!customer) {
             return res.status(404).json({
@@ -25,6 +27,7 @@ async function getCustomerById(req, res) {
         res.status(200).json(customer);
     } catch (error) {
         console.log('Error : getCustomerById ' + error);
+        logger.error('Error : getCustomerById ' + error);
         res.status(500).json({ message: 'Error occured while getting customer' + error })
     }
 }
