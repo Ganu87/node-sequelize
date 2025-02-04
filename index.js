@@ -12,6 +12,6 @@ app.use(cors());
 app.use(bodyParser.json());
 
 app.use('/api/customer',customerRoute);
-app.use('api/order',orderRoute);
+app.use('/api/order',orderRoute);
 
 app.listen(PORT,()=>{console.log(`server is running on port ${PORT}`)});
